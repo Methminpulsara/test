@@ -1,0 +1,292 @@
+@import "tailwindcss";
+
+/*
+ * ═══════════════════════════════════════════════════════════
+ * AURELLE STUDIO — Design Tokens & Global Styles
+ * ═══════════════════════════════════════════════════════════
+ *
+ * Palette: Deep Mulberry + Warm Bone + Dusty Rose + Coral accent
+ * Chosen to feel modern-premium without the cliché gold/ivory.
+ * Dark sections use mulberry; light sections use bone/cream.
+ */
+
+@theme {
+  /* Brand palette (generates bg-mulberry, text-bone, etc.) */
+  --color-mulberry: #3D1A38;
+  --color-mulberry-light: #5C2D55;
+  --color-bone: #F4EDE6;
+  --color-cream: #FAF7F4;
+  --color-rose: #B8757E;
+  --color-rose-light: #D4A0A8;
+  --color-coral: #D4705A;
+  --color-ink: #1A1118;
+  --color-ink-soft: #4A3D47;
+
+  /* Fonts (generates font-display / font-body) */
+  --font-display: var(--font-display-face), 'Times New Roman', serif;
+  --font-body: var(--font-body-face), system-ui, sans-serif;
+}
+
+/* ─── Custom Properties ────────────────────────────────────── */
+:root {
+  /* Semantic */
+  --color-bg: var(--color-cream);
+  --color-fg: var(--color-ink);
+  --color-accent: var(--color-coral);
+  --color-muted: var(--color-ink-soft);
+
+  /* Fluid spacing scale */
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 1rem);
+  --space-md: clamp(1rem, 2vw, 2rem);
+  --space-lg: clamp(2rem, 4vw, 4rem);
+  --space-xl: clamp(3rem, 6vw, 6rem);
+  --space-2xl: clamp(4rem, 10vw, 10rem);
+
+  /* Fluid type scale */
+  --text-xs: clamp(0.7rem, 0.8vw, 0.85rem);
+  --text-sm: clamp(0.8rem, 0.9vw, 0.95rem);
+  --text-base: clamp(0.95rem, 1vw, 1.1rem);
+  --text-lg: clamp(1.1rem, 1.3vw, 1.4rem);
+  --text-xl: clamp(1.4rem, 2vw, 2rem);
+  --text-2xl: clamp(2rem, 3vw, 3rem);
+  --text-3xl: clamp(2.5rem, 5vw, 5rem);
+  --text-display: clamp(3.5rem, 10vw, 10rem);
+  --text-hero: clamp(4rem, 15vw, 16rem);
+  --text-mega: clamp(5rem, 20vw, 22rem);
+
+  /* Navbar */
+  --nav-height: 5rem;
+
+  /* Grain texture */
+  --grain-opacity: 0.04;
+}
+
+/* Dark theme (mulberry background) */
+[data-theme="dark"] {
+  --color-bg: var(--color-mulberry);
+  --color-fg: var(--color-bone);
+  --color-muted: var(--color-rose-light);
+}
+
+/* ─── Reset & Base ─────────────────────────────────────────── */
+/* NOTE: Tailwind's preflight already resets margin/padding. An un-layered
+   `* { margin:0; padding:0 }` would beat every Tailwind utility, so the
+   base styles live inside @layer base. */
+@layer base {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+}
+
+/* ─── Focus states ─────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Selection ────────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-rose);
+  color: var(--color-cream);
+}
+
+/* ─── Smooth page transitions (View Transitions API) ───── */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: fade-out 0.3s ease-out;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.3s ease-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── Grain overlay ────────────────────────────────────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ─── Arch clip-path ───────────────────────────────────────── */
+.arch-mask {
+  clip-path: url(#arch-clip);
+}
+
+.arch-mask-css {
+  clip-path: ellipse(50% 60% at 50% 55%);
+}
+
+/* ─── Line mask reveal ─────────────────────────────────────── */
+.line-mask {
+  overflow: hidden;
+}
+
+.line-mask > * {
+  will-change: transform;
+}
+
+
+
+/* ─── Kinetic band ─────────────────────────────────────────── */
+.kinetic-band {
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* ─── Horizontal gallery ───────────────────────────────────── */
+.horizontal-track {
+  will-change: transform;
+}
+
+/* ─── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .grain-overlay {
+    display: none;
+  }
+}
+
+/* ─── Utility classes ──────────────────────────────────────── */
+.text-balance {
+  text-wrap: balance;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Ensure content is visible even if JS/animation fails */
+.gsap-reveal {
+  opacity: 1;
+}
+
+/* Custom utilities */
+.fluid-pad-x {
+  padding-left: clamp(1.25rem, 4vw, 4rem);
+  padding-right: clamp(1.25rem, 4vw, 4rem);
+}
+
+.fluid-pad-y {
+  padding-top: clamp(3rem, 8vw, 8rem);
+  padding-bottom: clamp(3rem, 8vw, 8rem);
+}
+
+/* ─── Hero arch (clip-path is animated by GSAP; CSS gives the first paint) ─── */
+.hero-stage {
+  clip-path: inset(13% 33% 9% 33% round 17vw 17vw 0vw 0vw);
+}
+@media (max-width: 767px) {
+  .hero-stage {
+    clip-path: inset(20% 11% 14% 11% round 39vw 39vw 0vw 0vw);
+  }
+}
+
+/* Outline display type (set --outline inline to change the stroke colour) */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--outline, var(--color-bone));
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Prevent Lenis + pinned layouts from causing sideways page scroll */
+html,
+body {
+  max-width: 100%;
+}
+
+/* Pinned story: arch start shape (GSAP animates it to full-bleed) */
+.story-arch {
+  clip-path: inset(14% 7% 14% 61% round 16vw 16vw 0vw 0vw);
+}
+@media (max-width: 767px) {
+  .story-arch {
+    clip-path: inset(44% 14% 7% 14% round 36vw 36vw 0vw 0vw);
+  }
+}
+
+/* Underline that draws itself on hover (the Thread language) */
+.link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-draw:hover,
+.link-draw:focus-visible {
+  background-size: 100% 1px;
+}
