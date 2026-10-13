@@ -13,7 +13,7 @@
 
 // ─── Brand ────────────────────────────────────────────────────
 export const brand = {
-  name: 'Yor Salon', // [PLACEHOLDER] salon name
+  name: 'Your Salon', // [PLACEHOLDER] salon name
   tagline: 'Where every detail is deliberate.',
   shortDescription:
     'A modern premium salon in Colombo, crafted for women who value artistry, precision and an experience that feels personal.',
