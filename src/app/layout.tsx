@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     siteName: brand.name,
     images: [
       {
-        url: '/images/preview.jpeg',
+        url: 'https://mysalon-five.vercel.app/images/preview.jpeg', // මෙතැන සම්පූර්ණ Link එකම දෙන්න
         width: 1200,
         height: 630,
         alt: brand.name,
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: brand.name,
     description: brand.shortDescription,
-    images: ['/images/preview.jpeg'],
+    images: ['https://mysalon-five.vercel.app/images/preview.jpeg'], // මෙතැනත් සම්පූර්ණ Link එකම දෙන්න
   },
   robots: {
     index: true,
