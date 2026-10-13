@@ -53,9 +53,9 @@ export const metadata: Metadata = {
     siteName: brand.name,
     images: [
       {
-        url: '/images/og.jpg',
+        url: '/images/preview.jpeg',
         width: 1200,
-        height: 800,
+        height: 630,
         alt: brand.name,
       },
     ],
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: brand.name,
     description: brand.shortDescription,
-    images: ['/images/og.jpg'],
+    images: ['/images/preview.jpeg'],
   },
   robots: {
     index: true,
@@ -79,7 +79,7 @@ const jsonLd = {
   '@type': 'HairSalon',
   name: brand.name,
   description: brand.shortDescription,
-  image: `${brand.siteUrl}/images/og.jpg`,
+  image: `${brand.siteUrl}/images/preview.jpeg`,
   telephone: contact.phone,
   address: {
     '@type': 'PostalAddress',
